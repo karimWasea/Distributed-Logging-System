@@ -37,26 +37,28 @@ export class AuthComponent {
 
   // Login user and store the token
   loginUser(): void {
-    this.authService.getToken(this.loginData).subscribe(response => {
-      console.log('Login Successful', response);
-      // Store the token in localStorage after successful login
-      this.authService.setToken(response.token);
-      // Optionally, redirect after login
-      this.router.navigate(['/dashboard']);  // Example redirect to a dashboard
-    }, error => {
-      console.error('Login Failed', error);
-    });
+
+    this.authService.getToken()
+    // .subscribe(response => {
+    //   console.log('Login Successful', response);
+    //   // Store the token in localStorage after successful login
+    //   this.authService.setToken(response.token);
+    //   // Optionally, redirect after login
+    //   this.router.navigate(['/dashboard']);  // Example redirect to a dashboard
+    // }, error => {
+    //   console.error('Login Failed', error);
+    // });
   }
 
   // Get token from localStorage (if needed)
   getTokenFromStorage(): void {
-    const token = this.authService.getTokenFromStorage();
+    const token = this.authService.getToken();
     console.log('Token from localStorage:', token);
   }
 
   // Remove token from localStorage (e.g., logout)
   logout(): void {
-    this.authService.removeToken();
+    this.authService.logout();
     console.log('User logged out');
     // Optionally, redirect after logout
     this.router.navigate(['/login']);  // Example redirect to login

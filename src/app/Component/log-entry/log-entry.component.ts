@@ -8,25 +8,25 @@ import { LogEntryService } from 'src/app/Servess/log-entry.service';
 @Component({
   selector: 'app-log-entry',
   templateUrl: './log-entry.component.html',
-  styleUrls: ['./log-entry.component.css']
+  styleUrls: ['./log-entry.component.css'],
 })
 export class LogEntryComponent implements OnInit {
   logEntries: LogEntryDto[] = [];
   newLogEntry: LogEntryCreateDto = {
     service: '',
     level: '',
-    message: ''
+    message: '',
   };
   searchDto: LogEntrySearchDto = {
     pageNumber: 1,
-    pageSize: 10
+    pageSize: 10,
   };
   selectedLogEntry: LogEntryDto | null = null;
 
   constructor(private logEntryService: LogEntryService) {}
 
   ngOnInit(): void {
-    this.fetchLogEntries();
+    // this.fetchLogEntries();
   }
 
   fetchLogEntries(): void {

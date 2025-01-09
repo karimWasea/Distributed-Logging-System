@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <h2>Log Entries</h2>
+
+  <!-- Search Form -->
+  <form class="row g-3 mb-4">
+    <div class="col-md-3">
+      <label for="service" class="form-label">Service</label>
+      <input type="text" id="service" class="form-control" [(ngModel)]="searchCriteria.service" name="service"
+        placeholder="Enter service name" />
+    </div>
+    <div class="col-md-3">
+      <label for="level" class="form-label">Level</label>
+      <input type="text" id="level" class="form-control" [(ngModel)]="searchCriteria.level" name="level"
+        placeholder="Enter log level" />
+    </div>
+    <div class="col-md-3">
+      <label for="startTimestamp" class="form-label">Start Date</label>
+      <input type="date" id="startTimestamp" class="form-control" [(ngModel)]="searchCriteria.startTimestamp"
+        name="startTimestamp" />
+    </div>
+    <div class="col-md-3">
+      <label for="endTimestamp" class="form-label">End Date</label>
+      <input type="date" id="endTimestamp" class="form-control" [(ngModel)]="searchCriteria.endTimestamp"
+        name="endTimestamp" />
+    </div>
+    <div class="col-md-6">
+      <label for="message" class="form-label">Message</label>
+      <input type="text" id="message" class="form-control" [(ngModel)]="searchCriteria.message" name="message"
+        placeholder="Enter message keyword" />
+    </div>
+    <div class="col-md-3 align-self-end">
+      <button type="button" class="btn btn-primary w-100" (click)="fetchLogEntries()">Search</button>
+    </div>
+    <div class="col-md-3 align-self-end">
+      <button type="button" class="btn btn-secondary w-100" (click)="clearSearch()">Clear</button>
+    </div>
+  </form>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Log Entries Table -->
+  <table *ngIf="!isLoading && logEntries.length" class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Service</th>
+        <th>Level</th>
+        <th>Timestamp</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of logEntries; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ entry.service }}</td>
+        <td>{{ entry.level }}</td>
+        <td>{{ entry.timestamp | date: 'short' }}</td>
+        <td>{{ entry.message }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- No Data Message -->
+  <div *ngIf="!isLoading && !logEntries.length" class="alert alert-info">
+    No log entries found.
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-outline-primary" [disabled]="searchCriteria.pageNumber === 1"
+      (click)="previousPage()">Previous</button>
+    <span>Page {{ searchCriteria.pageNumber }}</span>
+    <button class="btn btn-outline-primary" (click)="nextPage()">Next</button>
+  </div>
+</div>
+ 

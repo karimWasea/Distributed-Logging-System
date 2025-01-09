@@ -21,7 +21,7 @@ export interface TokenResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'https://localhost:44375/api/Auth'; // Directly define the API URL
@@ -37,16 +37,18 @@ export class AuthService {
 
   // Login and get a token
   login(tokenRequestData: TokenRequestData): Observable<void> {
-    return this.http.post<TokenResponse>(`${this.apiUrl}/token`, tokenRequestData).pipe(
-      map((response) => {
-        this.setToken(response.token, response.expiresIn); // Store token and expiry
-      }),
-      catchError(this.handleError) // Handle errors
-    );
+    return this.http
+      .post<TokenResponse>(`${this.apiUrl}/token`, tokenRequestData)
+      .pipe(
+        map((response) => {
+          this.setToken(response.token, response.expiresIn); // Store token and expiry
+        }),
+        catchError(this.handleError) // Handle errors
+      );
   }
 
   // Store token and expiry in localStorage
-  private setToken(token: string, expiresIn: number): void {
+  setToken(token: string, expiresIn: number): void {
     const expiryTime = new Date().getTime() + expiresIn * 1000; // Convert to milliseconds
     localStorage.setItem('authToken', token);
     localStorage.setItem('tokenExpiry', expiryTime.toString());

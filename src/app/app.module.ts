@@ -8,20 +8,26 @@ import { AuthComponent } from './Component/auth/auth.component';
 import { FormsModule } from '@angular/forms';
 import { LogEntryComponent } from './Component/log-entry/log-entry.component';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { LogslistComponent } from './Component/logslist/logslist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogenComponent,
-  
-
-     
+    AuthComponent,
+    LogEntryComponent,
+    LogslistComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,FormsModule,FormsModule
+    AppRoutingModule,
+    FormsModule,
+    CommonModule,
+
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
